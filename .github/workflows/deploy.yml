@@ -18,4 +18,4 @@ jobs:
           path: dist/
 
       - name: Deploy
-        uses: actions/deploy-pages
+        uses: actions/deploy-pages@v3
