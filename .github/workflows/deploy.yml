@@ -16,9 +16,10 @@ jobs:
           npm i
           npm run build
       - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist/
+          name: "gh_page_build"
 
       - name: Deploy
         uses: actions/deploy-pages@v3
