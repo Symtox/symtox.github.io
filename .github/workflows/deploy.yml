@@ -13,8 +13,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build
         run: |
-          npm i
-          npm run build
+          mkdir dist
+          echo dist/index.html
+          echo "bite" > dist/index.html
       - name: Upload static files as artifact
         uses: actions/upload-pages-artifact@v3
         with:
