@@ -27,7 +27,7 @@ jobs:
           name: "gh_page_build"
 
       - name: Deploy
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
         with:
           artifact_name: 'gh_page_build'
 
