@@ -3,10 +3,14 @@ import BurgerButton from '../components/BurgerButton.vue'
 import { ref } from 'vue'
 import NavigationOverlay from '../components/NavigationOverlay.vue'
 import NavigationMenu from '../components/NavigationMenu.vue'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const navigationOverlayStatus = ref(false)
 const onBurgerButtonClick = () => {
   navigationOverlayStatus.value = !navigationOverlayStatus.value
+}
+const goToBlog = () => {
+  router.push({name: 'blog'})
 }
 </script>
 
@@ -17,6 +21,8 @@ const onBurgerButtonClick = () => {
   <navigation-overlay :state="navigationOverlayStatus">
     <navigation-menu />
   </navigation-overlay>
+  <button @click="goToBlog">BLOGG</button>
+
 
 </template>
 
