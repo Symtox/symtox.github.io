@@ -1,0 +1,89 @@
+article {
+  --padding: 24px;
+  border-radius: 4px;
+  background: white;
+  position: relative;
+  padding: var(--padding);
+  transition: transform ease-in .3s,
+  background-color ease-in .3s,
+  color ease-in .3s;
+  grid-row: span 4;
+  display: grid;
+  grid-template-rows: subgrid;
+  gap: 0;
+  overflow: hidden;
+}
+
+.tag {
+  min-width: 1rem;
+  font-size: .75rem;
+  background-color: var(--secondary);
+  color: white;
+  border-radius: 10px;
+  padding: 2px 10px;
+  transition: background-color .2s linear,
+  color .2s linear;
+}
+
+article:hover {
+  transform: scale(1.05);
+  background-color: var(--secondary);
+  color: white;
+}
+
+article::after {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  content: '';
+  transition: 0.3s opacity;
+  box-shadow: 0 0 10px 5px #dfc8b2;
+}
+
+article:hover::after {
+  opacity: 1;
+}
+
+h2 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: .75rem;
+}
+
+.tag-container {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+article:hover .tag {
+  background-color: white;
+  color: var(--secondary)
+}
+
+.see-more {
+  transform: translateX(calc(100% + var(--padding)));
+  transition: transform .5s;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  font-size: 1rem;
+  border-radius: 50%;
+  text-align: center;
+  justify-self: end;
+  display: block;
+  /*width: min-content;*/
+}
+
+article:hover .see-more {
+  transform: translateX(0);
+}
+
+.see-more > svg {
+  place-self: center center;
+  transform: rotate(.5turn);
+}
