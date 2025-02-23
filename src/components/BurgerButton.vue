@@ -9,13 +9,15 @@
   </button >
 </template>
 <script setup lang="ts" >
+
   const emit = defineEmits(['click'])
-  defineProps({
+  const props = defineProps({
     state: {
       type: Boolean,
       required: true
     }
   })
+
 </script>
 
 <style scoped>
