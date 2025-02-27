@@ -2,17 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-  min-height: 200dvh;
   background: var(--primary);
   font-family: "Exo", system-ui;
 }
 
 :root {
-  --primary: #E54C10;
-  --secondary: #F5F5F5;
-  --tercary: #9E0059;
-  --dark-blue: #9E0059;
-  --tercary: #9E0059
+  --primary: #ae4561;
+  --secondary: #04471C;
+  --tertiary: #FFEE88;
+  --light: #020202;
+  --dark: #ae4561;
 }
 
 

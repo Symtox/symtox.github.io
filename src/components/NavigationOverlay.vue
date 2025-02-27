@@ -1,10 +1,15 @@
 <template>
-  <nav :aria-expanded="innerState">
-    <div :class="['menu-wrapper', { disappearing: isContentLeaving}]" v-if="displayedItems !== 0">
-      <router-link v-for="item in items.slice(0, displayedItems)"
-                   :style="`--data-bg-src: url(${item.image})`"
+  <nav :aria-expanded="state">
+    <header>
+      <burger-button class="burger-button" @click="closeNavigation"/>
+      <theme-selector  />
+    </header>
+
+    <div class="link-wrapper">
+      <router-link v-for="(item, index) in items.slice(0, displayedItems)"
                    class="link"
-                   @click="onRouted"
+                   :key="index"
+                   @click="closeNavigation"
                    :to="item.path">
         <h2>{{ item.title }}</h2>
       </router-link>
@@ -14,10 +19,27 @@
 <script setup lang="ts">
 
 import { computed, ref, watch } from 'vue'
-const emit = defineEmits(['routed'])
+import BurgerButton from './BurgerButton.vue'
+import { useNavbarStore } from '@/stores/navbar-store'
+import { storeToRefs } from 'pinia'
+import ThemeSelector from '@/components/ThemeSelector.vue'
+import { useThemeStore } from '@/stores/theme-store'
 
-const onRouted = () => {
-  emit('routed')
+const navbarStore = useNavbarStore()
+const themeStore = useThemeStore()
+
+const { isThemeMenuOpen } = storeToRefs(themeStore)
+const { state } = storeToRefs(navbarStore)
+
+const closeNavigation = () => {
+  if(isThemeMenuOpen.value) {
+    isThemeMenuOpen.value = false;
+    setTimeout(() => {
+      state.value = false
+    }, 300)
+  } else {
+    state.value = false
+  }
 }
 
 export type MenuItem = {
@@ -26,66 +48,52 @@ export type MenuItem = {
   path: string
 }
 
-const props = defineProps({
-  state: {
-    type: Boolean,
-    required: true
-  }
-})
-
 const displayedItems = ref(0)
-const innerState = ref(false);
 
 const elementGrowDuration = 300
 const elementGrowDurationFormated = computed(() => `${elementGrowDuration}ms`)
 
-const elementFillDuration = 50
+const elementFillDuration = 150
 const elementFillDurationFormated = computed(() => `${elementFillDuration}ms`)
 
-const isContentLeaving = ref(false);
-let timeoutId
+let timeoutId: ReturnType<typeof setTimeout>
 
 const items: MenuItem[] = [{
   image: 'https://images.pexels.com/photos/265152/pexels-photo-265152.jpeg?auto=compress&cs=tinysrgb&w=600',
   title: 'Blog',
   path: 'blog'
-},{
+}, {
   image: 'https://images.pexels.com/photos/4831/hands-coffee-smartphone-technology.jpg?auto=compress&cs=tinysrgb&w=600',
   title: 'Contact',
   path: '/'
-},{
+}, {
   image: 'https://images.pexels.com/photos/2950003/pexels-photo-2950003.jpeg?auto=compress&cs=tinysrgb&w=600',
   title: 'Home',
   path: '/'
-},{
+}, {
   image: 'https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg?auto=compress&cs=tinysrgb&w=600',
   title: 'Projects',
   path: '/'
-},]
+}]
 
 const displayItems = () => {
   displayedItems.value++
-  if(displayedItems.value < items.length) {
-    timeoutId =   setTimeout(() => {
+  if (displayedItems.value < items.length) {
+    timeoutId = setTimeout(() => {
       displayItems()
     }, 300)
   }
 }
 
-watch(() => props.state, () => {
-  if(props.state) {
-    innerState.value = true
+watch(() => state.value, () => {
+  if (state.value) {
     timeoutId = setTimeout(() => {
       displayItems()
     }, elementFillDuration + elementGrowDuration + 500)
-  }
-  else {
-    isContentLeaving.value = true;
+  } else {
     clearTimeout(timeoutId)
     setTimeout(() => {
-      innerState.value = false
-      isContentLeaving.value = false;
-      displayedItems.value = 0;
+      displayedItems.value = 0
     }, 400)
   }
 })
@@ -96,7 +104,8 @@ watch(() => props.state, () => {
 nav {
   --size-transition-duration: v-bind(elementGrowDurationFormated);
   --border-radius-transition-duration: v-bind(elementFillDurationFormated);
-  background-color: var(--secondary);
+
+  background-color: var(--dark);
   position: fixed;
   interpolate-size: allow-keywords;
 
@@ -108,95 +117,94 @@ nav {
 
   border-radius: 0 0 100% 0;
 
+  overflow: hidden;
+
+
   transition: var(--border-radius-transition-duration) border-radius linear,
-    var(--size-transition-duration) width linear var(--border-radius-transition-duration),
-    var(--size-transition-duration) height linear var(--border-radius-transition-duration);
+  var(--size-transition-duration) width linear var(--border-radius-transition-duration),
+  var(--size-transition-duration) height linear var(--border-radius-transition-duration);
 }
 
 nav[aria-expanded="true"] {
-  border-radius: 0;
+  border-radius: 0 0 0 0;
   width: unset;
   overflow-y: auto;
   height: unset;
   transition: var(--size-transition-duration) width linear,
-    var(--size-transition-duration) height linear,
-    var(--border-radius-transition-duration) border-radius linear var(--size-transition-duration);
+  var(--size-transition-duration) height linear,
+  var(--border-radius-transition-duration) border-radius linear var(--size-transition-duration);
 
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
-.link {
-  padding: 50px 10px;
-  transition: opacity .5s, transform .5s;
-  color: white;
-  font-weight: 700;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  background-image: var(--data-bg-src);
-  border-radius: 4px;
-  position: relative;
-  overflow: hidden;
+
+.link-wrapper {
+  padding-left: 200px;
+  align-content: center;
+  padding-top: 200px;
 }
-
-.link > h2 {
-  transform: translateY(100px);
-  transition: transform .3s;
-  z-index: 2
-}
-
-.link:hover > h2 {
-  transform: translateY(0);
-}
-
-.link::after {
-  content: '';
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  position: absolute;
-  opacity: 0;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.link:hover::after {
-  opacity: 1;
-  transition: opacity .3s;
-}
-
-@starting-style {
-  .link {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-}
-
-.menu-wrapper {
-  padding: 75px;
-  transition: opacity .3s, transform .3s;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100%;
-  grid-template-rows: repeat(2, minmax(400px, 1fr));
-  gap: 10px;
-}
-
-
 
 @media (max-width: 768px) {
-  .menu-wrapper {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 300px);
+  .link-wrapper {
+    padding-left: 50px;
   }
 }
 
-
-.menu-wrapper.disappearing {
-  opacity: 0;
-  transform: translateY(-20px);
+.link-wrapper > .link {
+  font-style: normal;
+  text-decoration: none;
+  transform: scale(1);
+  font-size: 3rem;
+  display: block;
+  width: min-content;
+  color: var(--tertiary);
 }
+
+
+.link-wrapper > .link:is(:hover, :focus) {
+  outline: none;
+}
+
+.link-wrapper h2 {
+  transition: all 0.3s;
+  position: relative;
+  width: min-content;
+}
+
+.link-wrapper > .link:is(:hover, :focus) > h2 {
+  color: hsl(from var(--tertiary) h s calc(l + 40));
+  transform: scale(1.05);
+  text-shadow: 0 0 20px hsl(from var(--tertiary) h s calc(l * 1.07) / 0.5),
+  0 0 24px hsl(from var(--tertiary) h s calc(l + 40) / 0.5),
+  0 0 40px hsl(from var(--tertiary) h s calc(l + 20) / 0.4),
+  0 0 55px hsl(from var(--tertiary) h s calc(l + 20) / 0.3),
+  0 0 70px hsl(from var(--tertiary) h s calc(l + 20) / 0.3),
+  0 0 85px hsl(from var(--tertiary) h s calc(l + 10) / 0.3),
+  0 0 70px hsl(from var(--tertiary) h s calc(l + 10) / 01);
+
+}
+
+.link-wrapper:has(.link:is(:hover, :focus)) > .link:not(:is(:hover, :focus)) > h2 {
+  color: hsl(from var(--tertiary) h s l / 0.7);
+  transform: scale(0.95);
+}
+
+header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+
+nav[aria-expanded="false"] .theme-button {
+  display: none;
+  --TODO: TODO;
+}
+
+.burger-button {
+  justify-self: start;
+}
+
 </style>

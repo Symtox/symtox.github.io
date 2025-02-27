@@ -2,31 +2,29 @@
 import { useRoute } from 'vue-router'
 import BurgerButton from './components/BurgerButton.vue'
 import NavigationOverlay from './components/NavigationOverlay.vue'
-import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useNavbarStore } from './stores/navbar-store'
 
 const route = useRoute()
-const navigationOverlayStatus = ref(false)
+const navbarStore = useNavbarStore()
+const { state } = storeToRefs(navbarStore)
 
-const onBurgerButtonClick = () => {
-  navigationOverlayStatus.value = !navigationOverlayStatus.value
-}
-
-const onRouteChanged = () => {
-  navigationOverlayStatus.value = false
-}
 </script>
-
 <template>
-  <header>
-    <burger-button @click="onBurgerButtonClick" :state="navigationOverlayStatus"/>
-  </header>
-  <navigation-overlay @routed="onRouteChanged" :state="navigationOverlayStatus"/>
+  <main>
+    <header>
+      <burger-button @click="state = !state"/>
+    </header>
 
-  <RouterView :key="route.name" v-slot="{ Component }">
-    <Transition name="page-group">
-      <component :is="Component" />
-    </Transition>
-  </RouterView>
+    <navigation-overlay />
+
+    <RouterView :key="route.name" v-slot="{ Component }">
+      <Transition name="page-group">
+        <component :is="Component" />
+      </Transition>
+    </RouterView>
+  </main>
+
 </template>
 
 <style scoped>
@@ -42,7 +40,13 @@ const onRouteChanged = () => {
 }
 
 header {
-  position: sticky;
-  z-index: 20;
+  position: absolute;
+  z-index: 2;
+}
+
+</style>
+<style>
+:root {
+  --dark-blue: #9E0059;
 }
 </style>

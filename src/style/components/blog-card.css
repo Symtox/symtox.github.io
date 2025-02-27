@@ -1,7 +1,7 @@
 article {
   --padding: 24px;
   border-radius: 4px;
-  background: white;
+  background: var(--primary);
   position: relative;
   padding: var(--padding);
   transition: transform ease-in .3s,
@@ -18,7 +18,7 @@ article {
   min-width: 1rem;
   font-size: .75rem;
   background-color: var(--secondary);
-  color: white;
+  color: var(--tertiary);
   border-radius: 10px;
   padding: 2px 10px;
   transition: background-color .2s linear,
@@ -61,7 +61,7 @@ h2 {
 }
 
 article:hover .tag {
-  background-color: white;
+  background-color: var(--primary);
   color: var(--secondary)
 }
 

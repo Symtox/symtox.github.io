@@ -2,8 +2,8 @@
     <BlogCardList :items="entries"/>
 </template>
 <script setup lang="ts">
-import { lorem } from '../utils'
-import BlogCardList, { BlogPostTag } from '../components/BlogCardList.vue'
+import { lorem } from '@/utils'
+import BlogCardList, { type BlogPostTag } from '@/components/BlogCardList.vue'
 
 type BlogEntry = {
   title: string;
