@@ -2,7 +2,7 @@
   <nav :aria-expanded="state">
     <header>
       <burger-button class="burger-button" @click="closeNavigation"/>
-      <theme-selector  />
+      <theme-selector v-if="showThemeControl"/>
     </header>
 
     <div class="link-wrapper">
@@ -19,16 +19,16 @@
 <script setup lang="ts">
 
 import { computed, ref, watch } from 'vue'
-import BurgerButton from './BurgerButton.vue'
-import { useNavbarStore } from '@/stores/navbar-store'
+import BurgerButton from '../../components/BurgerButton.vue'
+import { useNavbarStore } from '@/navigation/navbar-store'
 import { storeToRefs } from 'pinia'
-import ThemeSelector from '@/components/ThemeSelector.vue'
-import { useThemeStore } from '@/stores/theme-store'
+import ThemeSelector from '@/navigation/components/ThemeSelector.vue'
+import { useThemeStore } from '@/navigation/theme-store'
 
 const navbarStore = useNavbarStore()
 const themeStore = useThemeStore()
 
-const { isThemeMenuOpen } = storeToRefs(themeStore)
+const { isThemeMenuOpen, showThemeControl } = storeToRefs(themeStore)
 const { state } = storeToRefs(navbarStore)
 
 const closeNavigation = () => {
@@ -36,9 +36,11 @@ const closeNavigation = () => {
     isThemeMenuOpen.value = false;
     setTimeout(() => {
       state.value = false
+      showThemeControl.value = false
     }, 300)
   } else {
     state.value = false
+    showThemeControl.value = false
   }
 }
 
@@ -72,8 +74,8 @@ const items: MenuItem[] = [{
   path: '/'
 }, {
   image: 'https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg?auto=compress&cs=tinysrgb&w=600',
-  title: 'Projects',
-  path: '/'
+  title: 'PLayground',
+  path: '/playground'
 }]
 
 const displayItems = () => {
@@ -88,6 +90,7 @@ const displayItems = () => {
 watch(() => state.value, () => {
   if (state.value) {
     timeoutId = setTimeout(() => {
+      showThemeControl.value = true
       displayItems()
     }, elementFillDuration + elementGrowDuration + 500)
   } else {
@@ -174,15 +177,11 @@ nav[aria-expanded="true"] {
 }
 
 .link-wrapper > .link:is(:hover, :focus) > h2 {
-  color: hsl(from var(--tertiary) h s calc(l + 40));
   transform: scale(1.05);
-  text-shadow: 0 0 20px hsl(from var(--tertiary) h s calc(l * 1.07) / 0.5),
-  0 0 24px hsl(from var(--tertiary) h s calc(l + 40) / 0.5),
-  0 0 40px hsl(from var(--tertiary) h s calc(l + 20) / 0.4),
-  0 0 55px hsl(from var(--tertiary) h s calc(l + 20) / 0.3),
-  0 0 70px hsl(from var(--tertiary) h s calc(l + 20) / 0.3),
-  0 0 85px hsl(from var(--tertiary) h s calc(l + 10) / 0.3),
-  0 0 70px hsl(from var(--tertiary) h s calc(l + 10) / 01);
+  text-shadow: 0 0 20px hsl(from var(--primary) h s calc(l + 40) / 0.5),
+  0 0 24px hsl(from var(--primary) h s calc(l + 40) / 0.5),
+  0 0 55px hsl(from var(--primary) h s calc(l + 20) / 0.3),
+  0 0 70px hsl(from var(--primary) h s calc(l + 20) / 0.3);
 
 }
 
@@ -200,7 +199,6 @@ header {
 
 nav[aria-expanded="false"] .theme-button {
   display: none;
-  --TODO: TODO;
 }
 
 .burger-button {

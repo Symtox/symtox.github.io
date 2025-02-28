@@ -11,9 +11,9 @@ export type Theme = {
 }
 
 export const useThemeStore = defineStore('theme-store', () => {
-  const themeIndex = ref(0)
+  const selectedThemeIndex = ref(0)
   const isThemeMenuOpen = ref(false);
-
+  const showThemeControl = ref(false);
   const themes: Theme[] = [{
     name: 'Mon theme de base',
     '--primary': '#ae4561',
@@ -38,7 +38,7 @@ export const useThemeStore = defineStore('theme-store', () => {
   }]
 
   const selectTheme = (index: number) => {
-    themeIndex.value = index
+    selectedThemeIndex.value = index
     const bodyEl = document.querySelector('body')
     if (bodyEl) {
       Object.entries(themes[index]).forEach(([key, value]) => {
@@ -47,7 +47,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     }
   }
 
-  const currentTheme = computed(() => themes[themeIndex.value])
+  const currentTheme = computed(() => themes[selectedThemeIndex.value])
 
-  return { themes, currentTheme, themeIndex, isThemeMenuOpen, selectTheme }
+  return { themes, currentTheme, selectedThemeIndex, isThemeMenuOpen, selectTheme, showThemeControl }
 })

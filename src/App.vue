@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import BurgerButton from './components/BurgerButton.vue'
-import NavigationOverlay from './components/NavigationOverlay.vue'
+import NavigationOverlay from './navigation/components/NavigationOverlay.vue'
 import { storeToRefs } from 'pinia'
-import { useNavbarStore } from './stores/navbar-store'
+import { useNavbarStore } from './navigation/navbar-store'
 
 const route = useRoute()
 const navbarStore = useNavbarStore()
