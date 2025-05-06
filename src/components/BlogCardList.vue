@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
 
-import { PropType } from 'vue'
+import { type PropType } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -35,7 +35,7 @@ export type BlogPost = {
 
 defineProps({
   items: {
-    type: Object as PropType<BlogPost>,
+    type: Array as PropType<BlogPost[]>,
     required: true
   }
 })
@@ -47,6 +47,6 @@ const seeMore = (item: BlogPost) => {
 
 </script>
 <style scoped>
-@import '../style/components/blog-card.css';
-@import '../style/components/blog-card-list.css';
+@import '@/style/components/blog-card.css';
+@import '@/style/components/blog-card-list.css';
 </style>

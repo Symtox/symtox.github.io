@@ -1,18 +1,30 @@
 {
-
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "baseUrl": "src",
-    "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "alwaysStrict": true,
+    "target": "ESNext",
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
-    "newLine": "lf",
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-    "noEmit": true
+    "baseUrl": ".",
+    "strict": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "lf",
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    "sourceMap": true,
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["vite/client"]
   },
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.json"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules", "dist"]
 }
