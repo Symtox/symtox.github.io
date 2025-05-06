@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUpdated, type PropType, ref, useTemplateRef } from 'vue'
+import { onMounted, onUpdated, type PropType, useTemplateRef } from 'vue'
 import { editor } from 'monaco-editor'
 import type { SourceFile } from '@/playground/models'
 import modelPool from '@/playground/editor/models/model-pool'
