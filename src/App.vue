@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import BurgerButton from './components/BurgerButton.vue'
 import NavigationOverlay from './navigation/components/NavigationOverlay.vue'
 import { storeToRefs } from 'pinia'
 import { useNavbarStore } from './navigation/navbar-store'
@@ -12,12 +11,7 @@ const { state } = storeToRefs(navbarStore)
 </script>
 <template>
   <main>
-    <header>
-      <burger-button @click="state = !state"/>
-    </header>
-
     <navigation-overlay />
-
     <RouterView :key="route.name" v-slot="{ Component }">
       <Transition name="page-group">
         <component :is="Component" />

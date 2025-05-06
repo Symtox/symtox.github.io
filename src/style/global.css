@@ -6,12 +6,31 @@ body {
   font-family: "Exo", system-ui;
 }
 
-:root {
+.dark {
   --primary: #ae4561;
   --secondary: #04471C;
-  --tertiary: #FFEE88;
-  --light: #020202;
-  --dark: #ae4561;
+  --tertiary: #ae4561;
+  --light: #FFEE88;
+  --dark: #020202;
 }
+.light {
+  --primary: #241023;
+  --secondary: #E94220;
+  --tertiary: #D95D39;
+  --light: #DFE0E2;
+  --dark: #0E103D;
+}
+
+.default {
+  --primary: #06C6B9;
+  --secondary: #EB6F99;
+  --tertiary: #FDF0D5;
+  --light: #EBFEFE;
+  --dark: #331832;
+}
+
+
+
+:root {}
 
 

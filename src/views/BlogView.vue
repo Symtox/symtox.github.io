@@ -1,9 +1,12 @@
 <template>
-    <BlogCardList :items="entries"/>
+  <SidebarBurger color="primary"/>
+  <BlogCardList :items="entries"/>
 </template>
 <script setup lang="ts">
 import { lorem } from '@/utils'
 import BlogCardList, { type BlogPostTag } from '@/components/BlogCardList.vue'
+import BurgerButton from '@/components/BurgerButton.vue'
+import SidebarBurger from '@/navigation/components/SidebarBurger.vue'
 
 type BlogEntry = {
   title: string;

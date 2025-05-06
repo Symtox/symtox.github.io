@@ -1,7 +1,7 @@
 <template>
   <nav :aria-expanded="state">
     <header>
-      <burger-button class="burger-button" @click="closeNavigation"/>
+      <burger-button class="burger-button" @click="closeNavigation" color="var(--primary)"/>
       <theme-selector v-if="showThemeControl"/>
     </header>
 
@@ -178,10 +178,11 @@ nav[aria-expanded="true"] {
 
 .link-wrapper > .link:is(:hover, :focus) > h2 {
   transform: scale(1.05);
-  text-shadow: 0 0 20px hsl(from var(--primary) h s calc(l + 40) / 0.5),
+  text-shadow: 0 0 20px hsl(from var(--primary) h s calc(l + 20) / 0.5),
   0 0 24px hsl(from var(--primary) h s calc(l + 40) / 0.5),
   0 0 55px hsl(from var(--primary) h s calc(l + 20) / 0.3),
   0 0 70px hsl(from var(--primary) h s calc(l + 20) / 0.3);
+  color: hsl(from var(--tertiary) h calc(s + 20) calc(l + 10) / 1);
 
 }
 
@@ -191,8 +192,6 @@ nav[aria-expanded="true"] {
 }
 
 header {
-  display: flex;
-  width: 100%;
   justify-content: space-between;
 }
 

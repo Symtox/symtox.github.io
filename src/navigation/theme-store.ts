@@ -2,12 +2,8 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 export type Theme = {
-  name: string;
-  '--primary': `#${string}`
-  '--secondary': `#${string}`
-  '--tertiary': `#${string}`
-  '--light': `#${string}`
-  '--dark': `#${string}`
+  name: string,
+  className: string,
 }
 
 export const useThemeStore = defineStore('theme-store', () => {
@@ -15,34 +11,26 @@ export const useThemeStore = defineStore('theme-store', () => {
   const isThemeMenuOpen = ref(false);
   const showThemeControl = ref(false);
   const themes: Theme[] = [{
-    name: 'Mon theme de base',
-    '--primary': '#ae4561',
-    '--secondary': '#04471C',
-    '--tertiary': '#ae4561',
-    '--light': '#FFEE88',
-    '--dark': '#020202'
+    name: 'default',
+    className: 'default'
   }, {
-    name: 'Un theme random',
-    '--primary': '#640D14',
-    '--secondary': '#FDCA40',
-    '--tertiary': '#D95D39',
-    '--light': '#202C59',
-    '--dark': '#ae4561'
+    name: 'dark',
+    className: 'dark'
   }, {
-    name: 'Le bon theme',
-    '--primary': '#06C6B9',
-    '--secondary': '#EB6F99',
-    '--tertiary': '#FDF0D5',
-    '--light': '#EBFEFE',
-    '--dark': '#331832'
+    name: 'light',
+    className: 'light'
   }]
 
   const selectTheme = (index: number) => {
     selectedThemeIndex.value = index
     const bodyEl = document.querySelector('body')
     if (bodyEl) {
-      Object.entries(themes[index]).forEach(([key, value]) => {
-          bodyEl.style.setProperty(key, value)
+      themes.forEach((theme, i) => {
+        if (i === index) {
+          bodyEl.classList.add(theme.className)
+        } else {
+          bodyEl.classList.remove(theme.className)
+        }
       })
     }
   }

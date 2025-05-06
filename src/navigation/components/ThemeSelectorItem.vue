@@ -1,12 +1,12 @@
 <template>
   <button @click="() => emit('theme-selected')" :class="{ 'active': active }">
     <label>{{theme.name}}</label>
-    <div class="theme-wrapper">
-      <span :style="`--color-preview: ${theme['--primary']};`"></span>
-      <span :style="`--color-preview: ${theme['--secondary']}`"></span>
-      <span :style="`--color-preview: ${theme['--tertiary']}`"></span>
-      <span :style="`--color-preview: ${theme['--light']}`"></span>
-      <span :style="`--color-preview: ${theme['--dark']}`"></span>
+    <div :class="['theme-wrapper', theme.className]">
+      <span :style="`--color-preview: var(--primary);`"></span>
+      <span :style="`--color-preview: var(--secondary);`"></span>
+      <span :style="`--color-preview: var(--tertiary);`"></span>
+      <span :style="`--color-preview: var(--light);`"></span>
+      <span :style="`--color-preview: var(--dark);`"></span>
     </div>
   </button>
 </template>
