@@ -1,6 +1,6 @@
 <template>
   <nav :aria-expanded="state">
-    <theme-selector v-if="showThemeControl"/>
+    <theme-selector v-if="showThemeControl && state"/>
 
     <div class="link-wrapper">
       <router-link v-for="(item, index) in items.slice(0, displayedItems)"
@@ -128,7 +128,8 @@ nav {
 nav[aria-expanded="true"] {
   border-radius: 0 0 0 0;
   width: unset;
-  overflow-y: auto;
+  overflow-y: hidden;
+  perspective: 1px;
   height: unset;
   transition: var(--size-transition-duration) width linear,
   var(--size-transition-duration) height linear,
@@ -141,9 +142,11 @@ nav[aria-expanded="true"] {
 
 
 .link-wrapper {
-  padding-left: 200px;
+  position: absolute  ;
+  inset: 0;
+  height: 100dvh;
+  width: 100dvw;
   align-content: center;
-  padding-top: 200px;
 }
 
 @media (max-width: 768px) {
@@ -187,10 +190,5 @@ nav[aria-expanded="true"] {
   color: hsl(from var(--tertiary) h s l / 0.7);
   transform: scale(0.95);
 }
-
-nav[aria-expanded="false"] .theme-button {
-  display: none;
-}
-
 
 </style>
