@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import NavigationOverlay from './navigation/components/NavigationOverlay.vue'
-import { storeToRefs } from 'pinia'
-import { useNavbarStore } from './navigation/navbar-store'
+import SidebarBurger from '@/navigation/components/SidebarBurger.vue'
 
 const route = useRoute()
-const navbarStore = useNavbarStore()
-const { state } = storeToRefs(navbarStore)
 
 </script>
 <template>
   <main>
+    <SidebarBurger />
     <navigation-overlay />
     <RouterView :key="route.name" v-slot="{ Component }">
       <Transition name="page-group">

@@ -1,9 +1,6 @@
 <template>
   <nav :aria-expanded="state">
-    <header>
-      <burger-button class="burger-button" @click="closeNavigation" color="var(--primary)"/>
-      <theme-selector v-if="showThemeControl"/>
-    </header>
+    <theme-selector v-if="showThemeControl"/>
 
     <div class="link-wrapper">
       <router-link v-for="(item, index) in items.slice(0, displayedItems)"
@@ -74,7 +71,7 @@ const items: MenuItem[] = [{
   path: '/'
 }, {
   image: 'https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg?auto=compress&cs=tinysrgb&w=600',
-  title: 'PLayground',
+  title: 'Playground',
   path: '/playground'
 }]
 
@@ -191,17 +188,9 @@ nav[aria-expanded="true"] {
   transform: scale(0.95);
 }
 
-header {
-  justify-content: space-between;
-}
-
-
 nav[aria-expanded="false"] .theme-button {
   display: none;
 }
 
-.burger-button {
-  justify-self: start;
-}
 
 </style>
